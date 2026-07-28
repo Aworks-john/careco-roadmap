@@ -68,7 +68,6 @@
 
                   <div>
                     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-                      <div style="display:inline-block;font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#80bc00;background:#eef6d9;padding:3px 8px;border-radius:2px;">{{ p.category }}</div>
                       <sc-for list="{{ p.tags }}" as="tag" hint-placeholder-count="0">
                         <sc-if value="{{ tag.isRecommend }}" hint-placeholder-val="{{ false }}">
                           <div style="display:flex;align-items:center;gap:4px;background:#1f3d2b;padding:3px 8px;border-radius:2px;">
@@ -80,7 +79,10 @@
                         </sc-if>
                       </sc-for>
                     </div>
-                    <div style="font-family:'Poppins',sans-serif;font-size:21px;font-weight:600;color:oklch(0.24 0.02 240);margin-bottom:6px;">{{ p.name }}</div>
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+                      <div style="font-family:'Poppins',sans-serif;font-size:21px;font-weight:600;color:oklch(0.24 0.02 240);">{{ p.name }}</div>
+                      <div style="display:inline-block;font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#80bc00;background:#eef6d9;padding:3px 8px;border-radius:2px;">{{ p.category }}</div>
+                    </div>
                     <sc-if value="{{ p.hasDescription }}" hint-placeholder-val="{{ false }}">
                       <div style="font-size:15px;line-height:1.5;color:oklch(0.46 0.015 240);">{{ p.description }}</div>
                     </sc-if>
