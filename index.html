@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Source+Sans+Pro:wght@400;600&display=swap');
+    body { margin: 0; background: oklch(0.97 0.006 240); }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width:100%;max-width:1500px;margin:0 auto;background:oklch(0.985 0.004 240);font-family:'Source Sans Pro',sans-serif;color:oklch(0.24 0.02 240);padding-bottom:clamp(32px,6vw,80px);">
+
+  <div style="padding:clamp(20px,4vw,36px) clamp(20px,8vw,80px);background:#4a4f54;color:white;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <div style="font-family:'Poppins',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:500;line-height:1.15;">Product Roadmap</div>
+    <img src="assets/careco-logo.svg" alt="CareCo" style="height:clamp(26px,4vw,36px);width:auto;display:block;flex-shrink:0;">
+  </div>
+
+  <div style="position:relative;padding:clamp(32px,6vw,64px) clamp(20px,8vw,80px) 0;">
+    <div style="position:absolute;left:158px;top:64px;bottom:80px;width:2px;background:oklch(0.85 0.01 240);"></div>
+
+    <sc-for list="{{ quarterGroups }}" as="g" hint-placeholder-count="3">
+      <div style="margin-bottom:8px;">
+
+        <div style="display:flex;align-items:center;cursor:pointer;padding-right:72px;position:relative;z-index:1;" onClick="{{ g.toggle }}">
+          <div style="display:flex;align-items:center;gap:10px;background:#e6e7e8;border-radius:20px;padding:8px 14px;">
+            <div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:#4a4f54;line-height:1;">{{ g.year }} {{ g.quarter }}</div>
+            <div style="width:18px;height:18px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;transform:{{ g.chevronTransform }};transition:transform 0.15s;">
+              <div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #4a4f54;"></div>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ g.expanded }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ g.products }}" as="p" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:120px 1fr;gap:0;margin-bottom:{{ p.gap }}px;position:relative;">
+
+              <div style="padding-right: 72px; position: relative;">
+                <div style="position: absolute; left: 73px; top: 15px; width: 12px; height: 12px; border-radius: 50%; background: #80bc00; border: 3px solid oklch(0.985 0.004 240); box-shadow: 0 0 0 2px #80bc00"></div>
+                <div style="position:absolute;left:85px;top:20px;width:73px;height:2px;background:#80bc00;"></div>
+              </div>
+
+              <div style="position:relative;padding-left:38px;">
+
+                <div style="display:flex;gap:{{ p.cardGap }}px;background:white;border-radius:4px;padding:20px 50px 20px 20px;align-items:start;width:{{ p.cardWidth }};">
+
+                  <sc-if value="{{ p.showRealImage }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:clamp(120px,22vw,208px);aspect-ratio:208/156;border-radius:3px;overflow:hidden;flex-shrink:0;">
+                      <img src="{{ p.image }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;background:white;">
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ p.showTier1Placeholder }}" hint-placeholder-val="{{ true }}">
+                    <div style="width:clamp(120px,22vw,208px);aspect-ratio:208/156;border-radius:3px;background:repeating-linear-gradient(135deg, oklch(0.93 0.01 220) 0px, oklch(0.93 0.01 220) 10px, oklch(0.96 0.006 220) 10px, oklch(0.96 0.006 220) 20px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <span style="font-family:monospace;font-size:11px;color:oklch(0.5 0.02 220);text-align:center;padding:0 8px;">product photo</span>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ p.isTier2 }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:clamp(64px,11vw,104px);aspect-ratio:104/78;border-radius:3px;background:repeating-linear-gradient(135deg, oklch(0.93 0.01 220) 0px, oklch(0.93 0.01 220) 10px, oklch(0.96 0.006 220) 10px, oklch(0.96 0.006 220) 20px);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                      <span style="font-family:monospace;font-size:9px;color:oklch(0.5 0.02 220);text-align:center;padding:0 6px;">product photo</span>
+                    </div>
+                  </sc-if>
+
+                  <div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                      <div style="display:inline-block;font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#80bc00;background:#eef6d9;padding:3px 8px;border-radius:2px;">{{ p.category }}</div>
+                      <sc-for list="{{ p.tags }}" as="tag" hint-placeholder-count="0">
+                        <sc-if value="{{ tag.isRecommend }}" hint-placeholder-val="{{ false }}">
+                          <div style="display:flex;align-items:center;gap:4px;background:#1f3d2b;padding:3px 8px;border-radius:2px;">
+                            <img src="assets/we-recommend-logo.svg" alt="We Recommend" style="height:14px;width:auto;filter:brightness(0) saturate(100%) invert(80%) sepia(38%) saturate(456%) hue-rotate(48deg) brightness(97%) contrast(92%);">
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{ tag.isPlainTag }}" hint-placeholder-val="{{ true }}">
+                          <div style="display:inline-block;font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:{{ tag.color }};background:{{ tag.bg }};padding:3px 8px;border-radius:2px;">{{ tag.label }}</div>
+                        </sc-if>
+                      </sc-for>
+                    </div>
+                    <div style="font-family:'Poppins',sans-serif;font-size:21px;font-weight:600;color:oklch(0.24 0.02 240);margin-bottom:6px;">{{ p.name }}</div>
+                    <sc-if value="{{ p.hasDescription }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size:15px;line-height:1.5;color:oklch(0.46 0.015 240);">{{ p.description }}</div>
+                    </sc-if>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </sc-for>
+        </sc-if>
+
+      </div>
+    </sc-for>
+
+  </div>
+
+  <div style="padding:clamp(20px,6vw,32px) clamp(20px,8vw,80px);border-top:1px solid oklch(0.9 0.008 240);font-size:13px;color:oklch(0.55 0.015 240);">
+    Dates and product names are placeholders — swap in final details before sending.
+  </div>
+
+</div>
+
+<button onClick="{{ scrollToTop }}" style="position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:#4a4f54;border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.25);z-index:10;" style-hover="background:#80bc00;">
+  <div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid white;"></div>
+</button>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;tier2Gap&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 24, &quot;min&quot;: 0, &quot;max&quot;: 60, &quot;step&quot;: 2, &quot;unit&quot;: &quot;px&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Layout&quot;}}">
+const RAW_PRODUCTS = [
+  { name: 'Alpina', category: 'Road Scooters', quarter: 'Q3 2026', tier: 1, recommend: true, promo: false, design: false, order: true, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', image: 'assets/alpina-thumbnail.png' },
+  { name: 'Voyage Deluxe Stroller', category: 'Hybrid Rollators', quarter: 'Q3 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Bathmate Swivel Shower Chair', category: 'Static Shower Chairs', quarter: 'Q3 2026', tier: 2, recommend: false, promo: false, design: false, order: false },
+  { name: 'iCONNECT Zen Travel Bag', category: 'Wheelchair Bags & Gloves', quarter: 'Q3 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'Tuni Vertu Duo Rollator', category: 'Attendant Wheelchairs', quarter: 'Q3 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'iCONNECT Sigma Carbon Fibre Walking Stick', category: 'Walking Sticks', quarter: 'Q3 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'Abilize Stride Lite Scooter only', category: 'Travel Scooters', quarter: 'Q3 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'Micromus Carry Case', category: 'Bags & Holders', quarter: 'Q3 2026', tier: 2, recommend: true, promo: false, design: false, order: false },
+  { name: 'Harmony Open-Cuff Crutches (Pair)', category: 'Crutches', quarter: 'Q3 2026', tier: 2, recommend: false, promo: false, design: false, order: false },
+  { name: 'Cleaning Kit - Microfiber Cloth', category: 'Scooter Safety & Protection', quarter: 'Q3 2026', tier: 2, recommend: true, promo: false, design: false, order: false },
+  { name: 'Cleaning Kit - Brush Set', category: 'Scooter Safety & Protection', quarter: 'Q3 2026', tier: 2, recommend: true, promo: false, design: false, order: false },
+  { name: 'Cleaning Kit - Luxury Microfibre Cleaning Set', category: 'Scooter Safety & Protection', quarter: 'Q3 2026', tier: 2, recommend: true, promo: false, design: false, order: false },
+  { name: 'Riser Recliner Arm Rest Organiser', category: 'Chair Protection & Safety', quarter: 'Q3 2026', tier: 2, recommend: true, promo: false, design: false, order: false },
+  { name: 'Arcadia High Back Chair', category: 'High Seat Chairs', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Stockholm Heat and Massage Swivel Recliner', category: 'Swivel Recliners', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Stockholm Arm & Headrest Covers', category: 'Chair Protection & Safety', quarter: 'Q4 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'proLite VOLAR 10 Comfort Transit', category: 'Attendant Wheelchairs', quarter: 'Q4 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'CareCo Halo Heated Walking Stick', category: 'Walking Sticks', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Aquacare Shower & Bath Bench', category: 'Bathroom Benches & Chairs', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'CareCo Bamboo Vertical Fold Rollator', category: 'Standard Rollators', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Glide Gel Swivel Cushion', category: 'Comfort Cushions', quarter: 'Q4 2026', tier: 2, recommend: false, promo: false, design: false, order: false },
+  { name: 'iLite Ikon Carbon Fibre Rollator', category: 'Standard Rollators', quarter: 'Q4 2026', tier: 1, recommend: true, promo: false, design: false, order: false },
+  { name: 'MagnaClick Range', category: 'Wheelchair Accessories', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: 'Sereno Bathlift', category: 'Reclining Bath Lifts', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+  { name: "3' Elevora Electric Adjustable Bed", category: 'Domestic Electric Adjustable Beds', quarter: 'Q4 2026', tier: 1, recommend: false, promo: false, design: false, order: false },
+];
+
+class Component extends DCLogic {
+  state = { expanded: { 'Q3 2026': true, 'Q4 2026': true } };
+
+  toggleQuarter(key) {
+    this.setState((s) => ({ expanded: { ...s.expanded, [key]: !s.expanded[key] } }));
+  }
+
+  renderVals() {
+    const tier2Gap = this.props.tier2Gap ?? 24;
+    const byQuarter = {};
+
+    RAW_PRODUCTS.forEach((r) => {
+      const tags = [];
+      if (r.design) tags.push({ label: 'Design phase', bg: '#36013F', color: '#ffffff', isPlainTag: true, isRecommend: false });
+      if (r.order) tags.push({ label: 'Order phase', bg: '#FFD700', color: '#4a4f54', isPlainTag: true, isRecommend: false });
+      if (r.promo) tags.push({ label: 'Promo', bg: '#bd0000', color: '#ffffff', isPlainTag: true, isRecommend: false });
+      if (r.recommend) tags.push({ label: '', bg: '', color: '', isPlainTag: false, isRecommend: true });
+      const isTier2 = r.tier === 2;
+
+      if (!byQuarter[r.quarter]) byQuarter[r.quarter] = [];
+      byQuarter[r.quarter].push({
+        category: r.category,
+        tags,
+        isTier1: !isTier2,
+        isTier2,
+        cardGap: isTier2 ? tier2Gap : 24,
+        cardWidth: isTier2 ? '70%' : '100%',
+        name: r.name,
+        hasDescription: !!r.description,
+        description: r.description || '',
+        showRealImage: !isTier2 && !!r.image,
+        showTier1Placeholder: !isTier2 && !r.image,
+        image: r.image || '',
+        gap: 28,
+      });
+    });
+
+    const quarterKeys = Object.keys(byQuarter).sort();
+    const quarterGroups = quarterKeys.map((q) => {
+      const [year, qLabel] = [q.split(' ')[1], q.split(' ')[0]];
+      return {
+        quarter: qLabel,
+        year,
+        products: byQuarter[q],
+        expanded: this.state.expanded[q],
+        chevronTransform: this.state.expanded[q] ? 'rotate(0deg)' : 'rotate(-90deg)',
+        toggle: () => this.toggleQuarter(q),
+      };
+    });
+
+    return {
+      quarterGroups,
+      rangeLabel: quarterKeys.join(' – '),
+      scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
